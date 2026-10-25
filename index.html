@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>恋爱人格测试 · 测测你适合和什么样的人过一辈子</title>
+<style>
+  :root{
+    --pri:#C96558;
+    --pri-dark:#B05043;
+    --pri-light:#FDF2F0;
+    --bg:#F7F5F3;
+    --card:#ffffff;
+    --text:#1F1F22;
+    --sub:#6B6B6E;
+    --border:#EFEAE6;
+    --ok:#4A8C6F;
+    --warn:#D4A017;
+    --shadow:0 20px 40px rgba(0,0,0,.06);
+    --shadow-btn:0 12px 28px rgba(201,101,88,.3);
+    --dy-cyan:#25F4EE;
+    --dy-red:#FE2C55;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .app{
+    max-width:520px;
+    margin:0 auto;
+    min-height:100vh;
+    background:var(--card);
+    box-shadow:var(--shadow);
+    overflow:hidden;
+    padding:0 24px;
+  }
+  /* 首页Logo头部 */
+  .brand-cover{
+    position:relative;
+    width:calc(100% + 48px);
+    margin:0 -24px 24px;
+    padding:28px 20px 22px;
+    background:#ffffff;
+    overflow:hidden;
+    text-align:center;
+  }
+  .brand-logo-img{
+    max-width:300px;
+    width:82%;
+  }
+  .home-body{padding-bottom:36px;}
+  .eyebrow{
+    display:inline-block;padding:6px 14px;border-radius:999px;
+    background:var(--pri-light);color:var(--pri);
+    font-size:12px;font-weight:600;margin-bottom:14px;
+  }
+  h1{font-size:26px;line-height:1.4;font-weight:800;letter-spacing:.3px;margin-bottom:12px;}
+  .lead{font-size:15px;color:var(--sub);line-height:1.75;margin-bottom:22px;}
+  .feature-list{
+    list-style:none;background:#FBFAF9;border:1px solid var(--border);
+    border-radius:18px;padding:18px 18px 6px;margin-bottom:22px;
+  }
+  .feature-list li{
+    display:flex;align-items:center;gap:10px;padding-bottom:12px;
+    font-size:14.5px;color:#333;line-height:1.6;
+  }
+  .check{
+    flex-shrink:0;width:22px;height:22px;border-radius:50%;
+    background:#EAF5EF;color:var(--ok);
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:12px;
+  }
+  .privacy-tip{
+    background:#F7F9F7;border:1px solid #E4ECE8;border-radius:14px;
+    padding:14px 16px;margin-bottom:24px;display:flex;align-items:flex-start;gap:10px;
+  }
+  .privacy-tip .icon{flex-shrink:0;width:20px;height:20px;color:var(--ok);margin-top:1px;}
+  .privacy-tip p{font-size:13px;color:#555;line-height:1.6;}
+  .privacy-tip strong{color:var(--text);font-weight:600;}
+  .btn-start{
+    width:100%;border:none;outline:none;cursor:pointer;padding:16px;border-radius:16px;
+    background:linear-gradient(135deg,var(--pri),var(--pri-dark));color:#fff;
+    font-size:17px;font-weight:700;letter-spacing:2px;box-shadow:var(--shadow-btn);
+    transition:transform .2s ease, box-shadow .2s ease, opacity .2s ease;-webkit-appearance:none;
+  }
+  .btn-start:hover{transform:translateY(-1px);box-shadow:0 14px 28px rgba(201,101,88,.35);}
+  .btn-start:active{transform:scale(.98);opacity:.92;}
+  .home-footer-tip{text-align:center;margin-top:18px;font-size:12px;color:#9E9A97;line-height:1.6;}
+  .card{background:var(--card);border-radius:24px;padding:24px 0 28px;margin-top:16px;}
+  .page{display:none;animation:fadeUp .4s cubic-bezier(.4,0,.2,1);}
+  .page.active{display:block;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+  .quiz-progress-wrap{
+    position:sticky;top:0;z-index:10;background:#fff;
+    padding:14px 24px 10px;margin:0 -24px;
+    border-bottom:1px solid var(--border);
+  }
+  .quiz-progress-text{
+    display:flex;align-items:center;justify-content:space-between;
+    margin-bottom:8px;font-size:13px;color:var(--sub);font-weight:600;
+  }
+  .quiz-progress-text .num{color:var(--pri);}
+  .progress-bar{height:7px;background:#EFEAE6;border-radius:8px;overflow:hidden;}
+  .progress-bar i{
+    display:block;height:100%;width:0;
+    background:linear-gradient(90deg,var(--dy-cyan),var(--dy-red));
+    border-radius:8px;transition:width .4s cubic-bezier(.4,0,.2,1);
+  }
+  .quiz-inner{padding:16px 0 20px;}
+  .quiz-tag{font-size:12px;color:var(--pri);font-weight:700;letter-spacing:.5px;margin-bottom:10px;}
+  .quiz-title{font-size:20px;font-weight:700;line-height:1.5;margin-bottom:24px;}
+  .options{list-style:none;display:flex;flex-direction:column;gap:12px;}
+  .option{
+    padding:16px 18px;border:1.5px solid var(--border);border-radius:16px;
+    background:#fff;text-align:left;font-size:15px;line-height:1.6;
+    cursor:pointer;transition:all .2s ease;
+  }
+  .option:hover{border-color:#D8CFC9;background:#FCFAF9;}
+  .option.selected{border-color:var(--pri);background:var(--pri-light);color:var(--pri);font-weight:600;}
+  .option .key{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:26px;height:26px;border-radius:50%;background:var(--bg);color:var(--sub);
+    font-size:12px;font-weight:700;margin-right:10px;
+  }
+  .option.selected .key{background:var(--pri);color:#fff;}
+  .result-hero{text-align:center;padding:6px 0 20px;border-bottom:1px dashed var(--border);margin-bottom:8px;}
+  .result-nickname{font-size:15px;color:var(--pri);font-weight:600;margin-bottom:6px;letter-spacing:1px;}
+  .result-type{font-size:26px;font-weight:800;color:var(--text);margin-bottom:12px;letter-spacing:.5px;}
+  .result-empathy{font-size:14.5px;color:#555;line-height:1.75;padding:0 8px;text-align:left;}
+  .result-empathy strong{color:var(--pri);font-weight:600;}
+  .result-ratio{margin-top:14px;font-size:12.5px;color:#888;}
+  .result-ratio strong{color:var(--pri);font-weight:600;}
+  .cat-card{
+    margin:6px 0 18px;
+    border-radius:20px;overflow:hidden;
+    border:1px solid var(--border);
+    background:linear-gradient(135deg,#FFF8F6,#FDF2F0);
+    box-shadow:0 8px 24px rgba(201,101,88,.10);
+  }
+  /* ========== 修复：消除黑边，浅暖底色，图片完整不裁切 ========== */
+  .cat-card .cat-imgwrap{
+    position:relative;width:100%;height:260px;
+    background:linear-gradient(180deg,#FFF8F6,#FDF2F0);
+    overflow:hidden;display:flex;align-items:center;justify-content:center;
+  }
+  .cat-card .cat-imgwrap img{
+    max-width:86%;
+    max-height:86%;
+    width:auto;
+    height:auto;
+    object-fit:contain;
+    animation:catIn .6s cubic-bezier(.4,0,.2,1);
+  }
+  @keyframes catIn{from{opacity:0;transform:scale(1.06)}to{opacity:1;transform:scale(1)}}
+  .cat-card .cat-fallback{
+    position:absolute;inset:0;display:none;align-items:center;justify-content:center;
+    font-size:72px;
+  }
+  .cat-card .cat-badge{
+    position:absolute;top:12px;left:12px;z-index:2;
+    background:rgba(0,0,0,.45);backdrop-filter:blur(4px);
+    color:#fff;font-size:12px;font-weight:700;letter-spacing:1px;
+    padding:6px 12px;border-radius:999px;
+  }
+  .cat-card .cat-info{padding:16px 18px;text-align:left;}
+  .cat-card .cat-breed{font-size:18px;font-weight:800;color:var(--pri);margin-bottom:6px;}
+  .cat-card .cat-breed .paw{margin-right:6px;}
+  .cat-card .cat-line{font-size:14px;color:#555;line-height:1.7;}
+  .section{margin-top:24px;}
+  .section-title{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:700;margin-bottom:12px;}
+  .section-title .dot{width:8px;height:8px;border-radius:50%;background:var(--pri);}
+  .bar-row{display:flex;align-items:center;gap:12px;margin:10px 0;font-size:13.5px;}
+  .bar-track{flex:1;height:8px;background:var(--border);border-radius:8px;overflow:hidden;}
+  .bar-fill{
+    height:100%;border-radius:8px;
+    background:linear-gradient(90deg,var(--dy-cyan),var(--dy-red));
+    transition:width .8s cubic-bezier(.4,0,.2,1);
+  }
+  .tags{display:flex;flex-wrap:wrap;gap:8px;}
+  .tag{
+    background:var(--bg);border:1px solid var(--border);
+    padding:7px 14px;border-radius:20px;font-size:13px;color:var(--text);
+  }
+  .tag.hot{background:var(--pri-light);border-color:var(--pri);color:var(--pri);font-weight:600;}
+  .list{list-style:none;}
+  .list li{
+    padding:7px 0 7px 20px;position:relative;font-size:14.5px;line-height:1.6;color:#444;
+  }
+  .list li::before{content:"";position:absolute;left:0;top:15px;width:6px;height:6px;border-radius:50%;background:var(--pri);}
+  .list.warn li::before{background:var(--warn);}
+  .local-tip{
+    background:#F7F9F7;border:1px solid #E4ECE8;border-radius:14px;
+    padding:14px 16px;margin-top:18px;
+  }
+  .local-tip p{font-size:13.5px;color:#555;line-height:1.7;}
+  .local-tip strong{color:var(--ok);font-weight:600;}
+  .share-tip{
+    text-align:center;margin-top:22px;padding-top:18px;border-top:1px dashed var(--border);
+    font-size:13.5px;color:var(--sub);line-height:1.6;
+  }
+  .share-tip strong{color:var(--pri);font-weight:600;}
+  .tip-box{
+    background:#FDF8F7;border:1px solid #F3E5E2;border-radius:16px;
+    padding:16px 18px;margin-top:22px;
+  }
+  .tip-box p{font-size:14px;line-height:1.8;color:#555;}
+  .tip-box strong{color:var(--pri);font-weight:600;}
+  .brand-footer{
+    margin-top:22px;padding-top:18px;border-top:1px dashed var(--border);text-align:center;
+  }
+  .brand-footer p{font-size:12.5px;color:var(--sub);line-height:1.6;}
+  .brand-footer strong{color:var(--text);font-weight:600;}
+  .btn{
+    display:block;width:100%;padding:14px;border:none;border-radius:14px;
+    font-size:15px;font-weight:600;cursor:pointer;transition:all .2s ease;-webkit-appearance:none;
+  }
+  .btn-primary{
+    background:linear-gradient(135deg,var(--pri),var(--pri-dark));color:#fff;
+    box-shadow:0 6px 16px rgba(201,101,88,.25);
+  }
+  .btn-primary:hover{transform:translateY(-1px);box-shadow:0 10px 22px rgba(201,101,88,.32);}
+  .btn-primary:active{transform:scale(.98);opacity:.92;}
+  .btn-outline{background:#fff;border:1.5px solid var(--border);color:var(--sub);}
+  .btn-outline:hover{border-color:var(--pri);color:var(--pri);background:var(--pri-light);}
+  .btn-outline.active{border-color:var(--pri);background:var(--pri-light);color:var(--pri);font-weight:600;}
+  .input{
+    width:100%;padding:14px 16px;border:1.5px solid var(--border);border-radius:14px;
+    font-size:16px;outline:none;margin-bottom:20px;background:#fff;
+  }
+  .input:focus{border-color:var(--pri);box-shadow:0 0 0 3px rgba(201,101,88,.1);}
+  .gender-row{display:flex;gap:12px;margin-top:10px;}
+  .gender-row .btn{flex:1;}
+  .disclaimer{text-align:center;font-size:11.5px;color:#C0BCB9;line-height:1.6;padding:20px 0 24px;}
+  @media (max-width: 420px){
+    .app{padding:0 20px;}
+    .brand-cover{width:calc(100% + 40px);margin:0 -20px 20px;padding:22px 16px 18px;}
+    .brand-logo-img{max-width:260px;}
+    h1{font-size:24px;}
+    .home-body{padding-bottom:32px;}
+    .result-type{font-size:23px;}
+    .quiz-progress-wrap{margin:0 -20px;padding-left:20px;padding-right:20px;}
+    .cat-card .cat-imgwrap{height:220px;}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- 首页 -->
+  <section class="page active" id="pageStart">
+    <div class="brand-cover">
+      <img class="brand-logo-img" src="logo.png" alt="阿峰单身情报站">
+    </div>
+    <div class="home-body">
+      <div class="eyebrow">阿峰情报站专属 · 恋爱人格测试</div>
+      <h1>测一测，你适合和什么样的人过一辈子？</h1>
+      <p class="lead">20道日常小题，看看你是哪种恋爱人格，又是哪只“猫格”～</p>
+      <ul class="feature-list">
+        <li><span class="check">✓</span><span>不测性格标签，只看你在关系里的真实反应</span></li>
+        <li><span class="check">✓</span><span>测出你的专属「猫格」，结果更有趣更好玩</span></li>
+        <li><span class="check">✓</span><span>附带现实匹配建议，当择偶参考</span></li>
+      </ul>
+      <div class="privacy-tip">
+        <svg class="icon" viewBox="0 0 1024 1024" fill="currentColor">
+          <path d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm-32 320c0-17.7 14.3-32 32-32s32 14.3 32 32v192c0 17.7-14.3 32-32 32s-32-14.3-32-32V384zm32 352c-26.5 0-48-21.5-48-48s21.5-48 48-48 48 21.5 48 48-21.5 48-48 48z" />
+        </svg>
+        <p><strong>全程匿名，无推销</strong><br>不收集照片、收入和个人信息，结果仅你可见。</p>
+      </div>
+      <button class="btn-start" onclick="goName()">开 始 测 试</button>
+      <p class="home-footer-tip">答案没有对错，选第一反应就好。</p>
+    </div>
+  </section>
+  <!-- 信息填写页 -->
+  <section class="page" id="pageName">
+    <div class="card">
+      <h2 style="margin-bottom:8px;font-size:20px">怎么称呼你？</h2>
+      <p class="lead" style="margin-bottom:20px">只用昵称，报告里会用到它。</p>
+      <input class="input" id="userName" placeholder="比如：小林" maxlength="10" autocomplete="off" onkeydown="if(event.key==='Enter') startQuiz()">
+      <label style="font-size:13px;color:var(--sub)">你的性别（用于匹配建议）</label>
+      <div class="gender-row">
+        <button class="btn btn-outline" id="gF" onclick="pickGender('女')">女生</button>
+        <button class="btn btn-outline" id="gM" onclick="pickGender('男')">男生</button>
+      </div>
+    </div>
+    <div style="padding:0 0 10px">
+      <button class="btn btn-primary" id="enterBtn" style="margin-top:12px" onclick="startQuiz()">进入题目</button>
+      <button class="btn btn-outline" style="margin-top:10px" onclick="showPage('pageStart')">返回</button>
+    </div>
+  </section>
+  <!-- 答题页 -->
+  <section class="page" id="pageQuiz">
+    <div class="quiz-progress-wrap">
+      <div class="quiz-progress-text">
+        <span id="progressLabel">第 1 / 20 题</span>
+        <span id="progressPercent" class="num">5%</span>
+      </div>
+      <div class="progress-bar"><i id="progressBar"></i></div>
+    </div>
+    <div class="card quiz-inner">
+      <div class="quiz-tag" id="qTag"></div>
+      <div class="quiz-title" id="qText"></div>
+      <ul class="options" id="optsBox"></ul>
+    </div>
+    <div style="padding:0 0 10px">
+      <button class="btn btn-outline" id="btnBack" style="margin-top:10px" onclick="prev()">上一题</button>
+    </div>
+  </section>
+  <!-- 结果页 -->
+  <section class="page" id="pageResult">
+    <div class="quiz-progress-wrap">
+      <div class="quiz-progress-text">
+        <span id="resultLabel">测试完成</span>
+        <span id="resultPercent" class="num">100%</span>
+      </div>
+      <div class="progress-bar"><i id="resultBar"></i></div>
+    </div>
+    <div class="card" id="resultBody"></div>
+    <div style="padding:0 0 10px">
+      <button class="btn btn-outline" onclick="copyResult()" style="margin-top:10px">📋 复制我的结果</button>
+      <button class="btn btn-outline" onclick="resetQuiz()" style="margin-top:10px">重新测试</button>
+    </div>
+    <div class="brand-footer">
+      <p>测试出品：<strong>西昌阿峰单身情报站</strong></p>
+      <p style="font-size:12px;margin-top:4px;color:#999">抖音/微信同名 · 西昌本地轻社交脱单局</p>
+    </div>
+  </section>
+  <p class="disclaimer">本测试为自我探索参考，不构成心理评估或诊断。数据仅用于为你提供更匹配的推荐，未经同意不会向任何人透露。</p>
+</div>
+<script>
+  var QS=[
+    {tag:"一、安全感与依恋",q:"对方一整天没回消息，你的第一反应是？",
+      opts:[["正常，可能在忙，忙完会回",3],["有点空落，会再发一条问问",2],["反复看手机，怀疑自己是不是说错话了",0],["无所谓，我自己也不太爱秒回",1]]},
+    {tag:"",q:"吵架之后，你最怕的是哪种情况？",
+      opts:[["把话说开就没事了",3],["怕对方不理我、直接消失",0],["怕越吵越伤感情，不如各自冷静",1],["怕被指责、被否定",1]]},
+    {tag:"",q:"你需要对方经常说“我在乎你”这类话吗？",
+      opts:[["不用说我也感受得到",3],["偶尔说挺好的",2],["挺重要的，少了会有点慌",0],["不太需要，我更看行动",2]]},
+    {tag:"二、亲密与自主",q:"你理想的关系状态更接近哪一种？",
+      opts:[["大部分时间在一起，各干各的也舒服",2],["每天有固定高质量相处，其余各自自由",3],["保持相当独立，一周见几次刚好",1],["希望深度绑定，未来规划完全同步",0]]},
+    {tag:"",q:"对方周末想单独和朋友出去玩，你会？",
+      opts:[["挺开心，我也有自己的事要做",3],["没问题，问一句几点回就行",2],["有点失落，但不会说出口",1],["希望带上我，不然感觉被排除在外",0]]},
+    {tag:"三、冲突与修复",q:"你生气的时候更像下面哪种？",
+      opts:[["当场说出来，不憋着",3],["先憋着，等对方自己察觉",0],["说话变冷、变讽刺",0],["先离开现场，冷静下来再谈",2]]},
+    {tag:"",q:"对方做错事，他怎么做你才觉得“这事算过去了”？",
+      opts:[["认真道歉，并说明以后怎么改",3],["用行动补回来，帮我做事",2],["抱抱我、哄哄我就行",1],["把道理讲清楚，谁错谁认",2]]},
+    {tag:"",q:"你能接受“带着分歧继续过日子”吗？",
+      opts:[["可以，有些问题本来就不用解决",3],["勉强可以，但心里会记着",1],["不行，必须谈清楚否则过不去",0],["看是什么问题再定",2]]},
+    {tag:"四、爱的表达",q:"你最容易被哪种举动打动？",
+      opts:[["一句真正懂我的话","理解"],["替我把麻烦事处理掉","保护"],["记得纪念日、准备小礼物","欣赏"],["陪我坐着聊一整晚","理解"],["拥抱、牵手这些身体接触","保护"]],need:true},
+    {tag:"",q:"反过来，你更愿意为对方做哪种事？",
+      opts:[["认真听他说那些别人觉得无聊的事","理解"],["替他解决现实里的麻烦","保护"],["记着他的喜好、准备惊喜","欣赏"],["陪他做任何他想做的事","理解"],["用肢体接触让他安心","保护"]],need:true},
+    {tag:"五、关系动机与承诺",q:"你现在想谈恋爱，最主要的原因是？",
+      opts:[["遇到心动的人了，想要亲密感",3],["年龄到了、家里也在催",1],["想要一个能一起过日子的人",2],["想有人懂我、接住我的情绪",2],["一个人太无聊了",0]]},
+    {tag:"",q:"为了关系稳定，你愿意让渡多少个人习惯？",
+      opts:[["核心习惯不让，其他可以商量",2],["愿意改不少",3],["不太愿意改，希望对方接受真实的我",1],["我可以迁就很多",2]]},
+    {tag:"",q:"如果一段关系很好，但看不到结婚的可能，你会？",
+      opts:[["继续享受当下",2],["给自己设个期限，到期就撤",2],["很难投入，一开始就会犹豫",1],["我不在乎结不结婚",3]]},
+    {tag:"六、现实匹配项",q:"关于钱，你更认同哪种方式？",
+      opts:[["各管各的，大额开支共同分摊",null],["合并管理，一个人主导",null],["AA或近似AA",null],["谁挣得多谁多承担，但不干涉对方怎么花",null]],hard:"money"},
+    {tag:"",q:"关于孩子？",
+      opts:[["一定要，越早越好",null],["想要，但可以晚点",null],["不确定，顺其自然",null],["不想要",null]],hard:"child"},
+    {tag:"",q:"婚后和双方父母的关系边界？",
+      opts:[["住得近、常来往挺好的",null],["保持距离，逢年过节见",null],["坚决不同住、互不干涉",null],["看情况，主要看对方父母怎么样",null]],hard:"parent"},
+    {tag:"",q:"你能接受的地理距离？",
+      opts:[["必须同城",null],["短期异地可以接受",null],["只要感情好，距离不是问题",null],["我自己未来可能会离开西昌",null]],hard:"distance"},
+    {tag:"",q:"作息和社交方式，你更希望？",
+      opts:[["我偏宅，希望对方也偏宅",null],["我爱出门，希望对方陪我去",null],["各玩各的就行",null],["希望对方能带我出去",null]],hard:"social"},
+    {tag:"七、最后三个",q:"你最想从伴侣身上得到的是什么？",
+      opts:[["被理解：我说什么他都懂","理解"],["被保护：有事他能扛得住","保护"],["被欣赏：他觉得我很厉害","欣赏"],["被需要：我对他很重要","需要"],["被带动：他能拉着我变得更好","带动"]],need:true,double:true},
+    {tag:"",q:"回想过去让你难受的关系瞬间，最常见的是哪种？",
+      opts:[["我说的话他根本没听进去","理解"],["我需要他的时候他不在","保护"],["他否定我、嫌弃我","欣赏"],["他不表态、不给未来","需要"],["我被管得太紧","带动"]],need:true}
+  ];
+  var MODULES=["安全感与依恋","亲密与自主","冲突与修复","爱的表达","关系动机与承诺","现实匹配项","情绪需求"];
+  var MOD_BREAKS=[0,3,5,8,10,13,18];
+  var cur=0, answers=new Array(QS.length), name="", gender="";
+  for(var i=0;i<answers.length;i++) answers[i]=null;
+  function optText(q,i){ var o=q.opts[i]; return Array.isArray(o)?o[0]:o; }
+  function optVal(q,i){ var o=q.opts[i]; return Array.isArray(o)?o[1]:null; }
+  function getMod(idx){
+    for(var j=MODULES.length-1;j>=0;j--){
+      if(idx>=MOD_BREAKS[j]) return MODULES[j];
+    }
+    return "";
+  }
+  function showPage(id){
+    var pages=document.querySelectorAll('.page');
+    for(var i=0;i<pages.length;i++) pages[i].classList.remove('active');
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0,0);
+  }
+  function goName(){ showPage('pageName'); }
+  function pickGender(g){
+    gender=g;
+    document.getElementById('gF').classList.toggle('active', g==='女');
+    document.getElementById('gM').classList.toggle('active', g==='男');
+    updateEnterButton();
+  }
+  function updateEnterButton(){
+    var btn=document.getElementById('enterBtn');
+    if(!btn) return;
+    if(gender){
+      btn.classList.add('btn-primary');
+      btn.classList.remove('btn-outline');
+    } else {
+      btn.classList.remove('btn-primary');
+      btn.classList.add('btn-outline');
+    }
+  }
+  function startQuiz(){
+    name=document.getElementById('userName').value.trim()||'你';
+    if(!gender){
+      alert('请先选择性别，再进入题目。');
+      return;
+    }
+    cur=0;
+    renderQ();
+    showPage('pageQuiz');
+  }
+  function renderQ(){
+    var q=QS[cur];
+    document.getElementById('qTag').textContent=getMod(cur);
+    document.getElementById('qText').textContent=q.q;
+    document.getElementById('btnBack').style.visibility=(cur===0)?'hidden':'visible';
+    var pct = Math.round((cur)/QS.length*100);
+    document.getElementById('progressLabel').textContent='第 '+(cur+1)+' / '+QS.length+' 题';
+    document.getElementById('progressPercent').textContent=pct+'%';
+    document.getElementById('progressBar').style.width=pct+'%';
+    var box=document.getElementById('optsBox'); box.innerHTML='';
+    var labels=['A','B','C','D','E'];
+    for(var i=0;i<q.opts.length;i++){
+      var li=document.createElement('li');
+      var div=document.createElement('div');
+      div.className='option'+(answers[cur]===i?' selected':'');
+      div.innerHTML='<span class="key">'+labels[i]+'</span><span>'+optText(q,i)+'</span>';
+      (function(idx){ div.onclick=function(){pick(idx);}; })(i);
+      li.appendChild(div); box.appendChild(li);
+    }
+  }
+  function pick(i){
+    answers[cur]=i;
+    var els=document.querySelectorAll('.option');
+    for(var j=0;j<els.length;j++) els[j].className='option'+(j===i?' selected':'');
+    setTimeout(function(){
+      if(cur<QS.length-1){cur++;renderQ();}else{finish();}
+    },280);
+  }
+  function prev(){ if(cur>0){cur--;renderQ();} }
+  function resetQuiz(){
+    for(var i=0;i<answers.length;i++) answers[i]=null;
+    cur=0; name=""; gender="";
+    document.getElementById('userName').value="";
+    document.getElementById('gF').classList.remove('active');
+    document.getElementById('gM').classList.remove('active');
+    var enterBtn=document.getElementById('enterBtn');
+    enterBtn.classList.remove('btn-primary');
+    enterBtn.classList.add('btn-outline');
+    showPage('pageStart');
+  }
+  function finish(){
+    var inconsistent=(answers[8]!==null && answers[9]!==null && answers[8]!==answers[9]);
+    function avgScore(idxs,max){
+      var s=0,c=0;
+      for(var k=0;k<idxs.length;k++){
+        var idx=idxs[k], v=optVal(QS[idx],answers[idx]);
+        if(v!==null&&v!==undefined){s+=v;c++;}
+      }
+      return c?Math.round(s/(max*c)*100):50;
+    }
+    var security=avgScore([0,1,2],3),
+        conflict=avgScore([5,6,7],3),
+        commit=avgScore([10,11,12],3),
+        autonomy=avgScore([3,4],2);
+    var cnt={理解:0,保护:0,欣赏:0,需要:0,带动:0};
+    var needIdx=[8,9,18,19];
+    for(var k=0;k<needIdx.length;k++){
+      var idx=needIdx[k], a=answers[idx];
+      if(a===null) continue;
+      var kv=optVal(QS[idx],a);
+      if(cnt[kv]!==undefined) cnt[kv]+=(QS[idx].double?2:1);
+    }
+    var entries=[];
+    for(var kk in cnt) entries.push([kk,cnt[kk]]);
+    entries.sort(function(a,b){return b[1]-a[1];});
+    var top=(entries[0]&&entries[0][1]>0)?entries[0][0]:'理解';
+    var top2=[];
+    for(var m=0;m<entries.length&&top2.length<2;m++){
+      if(entries[m][1]>0) top2.push(entries[m][0]);
+    }
+    if(top2.length===0) top2=['理解'];
+    var fearMap={
+      理解:'说了半天，对方根本没听进去',
+      保护:'最需要他的时候，他不在',
+      欣赏:'被他否定、被嫌弃',
+      需要:'付出很多，却没人说谢谢',
+      带动:'被困在原地，没人拉我一把'
+    };
+    var fear=fearMap[top]||fearMap['理解'];
+    var typeData=decideType(top, security, autonomy, conflict, commit);
+    var hardLabels={
+      money:['钱各管各，大额分摊','合并管理','AA制','多挣多担'],
+      child:['一定要孩子','想要但可晚点','顺其自然','不要孩子'],
+      parent:['和父母常来往','保持距离','坚决不同住','看情况'],
+      distance:['必须同城','可短期异地','异地也行','可能离开西昌'],
+      social:['偏宅','爱出门','各玩各的','希望对方带我']
+    };
+    var hardKeys=['money','child','parent','distance','social'],
+        hardIdx=[13,14,15,16,17],
+        tags=[];
+    for(var n=0;n<hardKeys.length;n++){
+      var a=answers[hardIdx[n]];
+      if(a!==null&&a!==undefined) tags.push(hardLabels[hardKeys[n]][a]);
+    }
+    renderResult({
+      type:typeData.type, nickname:typeData.nickname,
+      empathy:typeData.empathy, ratio:typeData.ratio,
+      catBreed:typeData.catBreed, catImg:typeData.catImg, catLine:typeData.catLine,
+      top:top,top2:top2,fear:fear,
+      security:security,conflict:conflict,
+      commit:commit,autonomy:autonomy,
+      fit:typeData.fit, warn:typeData.warn,
+      local:typeData.local,
+      tags:tags,inconsistent:inconsistent, gender:gender
+    });
+    showPage('pageResult');
+    document.getElementById('resultBar').style.width='100%';
+  }
+  function decideType(top, security, autonomy, conflict, commit){
+    var subtype='', nickname='', empathy='', ratio='', fit=[], warn=[], local='';
+    var catBreed='', catImg='', catLine='';
+    if(top==='理解'){
+      if(security < 45){
+        subtype='敏感共鸣型'; nickname='灵魂系 · 敏感款';
+        catBreed='布偶猫'; catLine='温和细腻、共情力强，最怕被冷落，一旦觉得“他没在听”，就会悄悄缩回自己的世界。';
+        catImg='https://aka.doubaocdn.com/s/Pk5Ay9nJAJ';
+        empathy='你在感情里<strong>最吃“被懂”</strong>这一套，而且敏感度很高。哪怕不说出口的小心思，也希望对方能接住；一旦觉得“他没在听”，就会悄悄退回去。';
+        ratio='11%';
+        fit=['会认真倾听、会追问“然后呢”的人','情绪细腻、有共情力，不是纯理性派','吵架后愿意主动修复，不冷战消失','能给你明确的偏爱和确定性','尊重你的情绪，不说“你想太多”'];
+        warn=['一有情绪就消失的回避型','把你的感受当矫情的人','只会讲道理、不会共情的人'];
+        local='西昌本地这类异性偏少，更建议从兴趣圈、同好局里找，普通相亲局很难遇到同频的人。';
+      } else if(autonomy > 60){
+        subtype='智性同频型'; nickname='灵魂系 · 清醒款';
+        catBreed='俄罗斯蓝猫'; catLine='安静聪明、有自己的边界，看似高冷，遇到同频的人却会卸下防备、聊得很深。';
+        catImg='https://aka.doubaocdn.com/s/S1Jy6apRv4';
+        empathy='你要的懂，不是情绪上的黏腻，而是<strong>精神上的同频</strong>。能聊到一块去、彼此欣赏，比天天腻在一起重要得多。你要亲密，但不要被吞没。';
+        ratio='14%';
+        fit=['有自己的思想和爱好，不空洞的人','尊重边界，不查岗、不控制','能和你深度聊天，也能各自安静','经济和人格都独立，不依附','欣赏你的想法，不打压你的主见'];
+        warn=['思想空洞、只会聊吃喝的人','需要高频黏腻来证明爱的人','把“独立”当“不爱”的人'];
+        local='适合找体制内、创业、专业技术岗的异性，有自己的事业和思考，彼此独立又互相支撑。';
+      } else {
+        subtype='温暖共鸣型'; nickname='灵魂系 · 温柔款';
+        catBreed='金吉拉'; catLine='温柔粘人、细心体贴，愿意慢慢靠近你，用最柔软的方式把人捂热。';
+        catImg='https://aka.doubaocdn.com/s/mpzm47DDUR';
+        empathy='你想要的感情，是<strong>有人愿意慢慢懂你</strong>。不用多轰轰烈烈，但对方要有耐心，愿意听你说废话，愿意接住你的小情绪，踏实又暖心。';
+        ratio='16%';
+        fit=['性格温和、有耐心的人','愿意沟通，不憋事、不冷战','懂得换位思考，不会自顾自说','情绪稳定，能给你踏实的感觉','愿意花时间了解你的人'];
+        warn=['脾气急躁、没耐心的人','什么都憋在心里不说的人','自我中心、不考虑你感受的人'];
+        local='西昌本地体制内、教师、医护类异性匹配度较高，性格大多沉稳踏实，能和你细水长流。';
+      }
+    }
+    else if(top==='保护'){
+      if(security < 45){
+        subtype='依赖守护型'; nickname='港湾系 · 依赖款';
+        catBreed='暹罗猫'; catLine='黏人又忠诚，需要被稳稳接住，认定的那个人就是全部，给足安全感就能放心依赖。';
+        catImg='https://aka.doubaocdn.com/s/r4XN8t3Hk6';
+        empathy='你内心其实很需要一个<strong>能托底的人</strong>。出事的时候他能扛着，迷茫的时候他能稳住，你不用一直假装坚强，可以放心做自己。';
+        ratio='13%';
+        fit=['有担当、遇事不甩锅的人','能力比你强，能帮你解决问题','情绪稳定，不会比你还慌','有规划，能给你明确的未来感','行动大于语言，默默做事的人'];
+        warn=['遇事就躲、让你扛的人','情绪比你还不稳定的人','只会画饼、不落地的人'];
+        local='适合找成熟稳重的异性，年龄大3-5岁最佳，事业有一定基础，能给你足够的安全感。';
+      } else {
+        subtype='务实搭档型'; nickname='港湾系 · 务实款';
+        catBreed='美国短毛猫'; catLine='皮实好养、性格稳妥，不娇气，能和你一起把日子过扎实，靠谱是它的底色。';
+        catImg='https://aka.doubaocdn.com/s/AV27qI9CQD';
+        empathy='你想要的“保护”，不是娇生惯养，而是<strong>有人和你一起扛事</strong>。生活里的麻烦、现实里的压力，有人能和你并肩解决，而不是你一个人撑着。';
+        ratio='15%';
+        fit=['做事靠谱、有执行力的人','有责任感，对未来有规划','经济能力相当，能一起攒钱过日子','遇到问题不逃避，一起想办法','家庭观念重，有担当'];
+        warn=['没担当、遇事就逃的人','花钱大手大脚、没规划的人','只会说好听话、不做事的人'];
+        local='西昌本地家境相当、工作稳定的异性最适配，能和你一起买房过日子，扎实往前走。';
+      }
+    }
+    else if(top==='欣赏'){
+      if(autonomy > 55){
+        subtype='慕强成长型'; nickname='光芒系 · 慕强款';
+        catBreed='孟加拉豹猫'; catLine='有野性、慕强好胜，喜欢比自己厉害的对象，也渴望被欣赏、被认可，越强越有魅力。';
+        catImg='https://aka.doubaocdn.com/s/8XUQW9Nt69';
+        empathy='你很容易被<strong>有闪光点、比你强</strong>的人吸引。被欣赏、被认可对你很重要，你也希望对方能带着你变得更好，彼此照耀，而不是彼此消耗。';
+        ratio='9%';
+        fit=['能力或见识在你之上的人','自律、有目标感，不是混日子','欣赏你的优点，也愿意教你东西','能带你认识新圈子、新事物','自己也在持续成长的人'];
+        warn=['靠打压你获得优越感的人','自己不上进还拖你后腿的人','只有外表光鲜、内里空的人'];
+        local='西昌优质异性主要集中在体制中高层、创业、医疗教育行业，是你的重点匹配方向。';
+      } else {
+        subtype='偏爱治愈型'; nickname='光芒系 · 甜宠款';
+        catBreed='英国短毛猫'; catLine='圆脸呆萌、最吃“被偏爱”这一套，要明目张胆的宠，甜甜的相处就是它的快乐。';
+        catImg='https://aka.doubaocdn.com/s/DbpcgXYI4P';
+        empathy='你吃的是<strong>被偏爱、被欣赏</strong>的感觉。对方眼里有你、经常夸你、把你放在心上，比什么都重要。你要的是明目张胆的偏爱，不是模棱两可的对待。';
+        ratio='12%';
+        fit=['会表达、不吝啬赞美的人','记得你的喜好、愿意花心思','有仪式感，生活里有小惊喜','大方公开你，给你足够的偏爱','真心觉得你很好，不挑剔'];
+        warn=['只会打压、否定你的人','抠门、不愿意付出的人','藏着掖着、不公开的人'];
+        local='适合找心思细腻、愿意为你花心思的异性，恋爱体验感会很好，相处起来很甜。';
+      }
+    }
+    else if(top==='需要'){
+      if(commit > 55){
+        subtype='付出守护型'; nickname='温柔系 · 付出款';
+        catBreed='金渐层'; catLine='温柔好脾气，习惯默默对你好，被需要时最有安全感，是付出型的小暖猫。';
+        catImg='https://aka.doubaocdn.com/s/Swwdns7HqD';
+        empathy='你在感情里习惯<strong>先照顾别人</strong>，被需要的时候你最有安全感。但你也要记得，好的关系是相互的，你的付出也值得被珍惜、被回应。';
+        ratio='10%';
+        fit=['懂得感恩、会把感谢说出来的人','有能力也有担当，不是来找照顾的','在你付出之外，也愿意照顾你的情绪','稳定、不把你的好当理所当然','能明确说出自己要什么，不让你猜'];
+        warn=['只索取不回馈的人','用“你自愿的”来回应你的人','理所当然享受你付出的人'];
+        local='找懂得感恩、性格实在的异性最适合，西昌本地家庭观念重的异性通常更懂珍惜你的付出。';
+      } else {
+        subtype='价值确认型'; nickname='温柔系 · 自我款';
+        catBreed='波斯猫'; catLine='优雅有底线，对你好但绝不无底线迁就，需要被珍惜、被认真对待，傲娇且清醒。';
+        catImg='https://aka.doubaocdn.com/s/r5YXUUkvbZ';
+        empathy='你需要通过“被需要”来确认自己的价值，但你也有自己的底线和骄傲。你愿意对人好，但前提是对方值得，你不会无底线付出。';
+        ratio='8%';
+        fit=['懂得珍惜你的好的人','有来有回，关系对等','有自己的事做，不依附你','真诚、不套路','能看到你的付出并回应'];
+        warn=['一味索取、不懂回报的人','把你的好当理所当然的人','心机重、利用你的人'];
+        local='适合找同样真诚、人品端正的异性，关系平等，彼此付出，相处不累。';
+      }
+    }
+    else if(top==='带动'){
+      subtype='成长驱动型'; nickname='上进系 · 领跑款';
+      catBreed='缅因猫'; catLine='身形庞大却不笨重，有主见、有担当，喜欢带着另一半一起往前跑，是队伍里的领跑者。';
+      catImg='https://aka.doubaocdn.com/s/fwwqvmGwvy';
+      empathy='你希望感情是<strong>1+1>2</strong>的。两个人在一起，能一起往前走、变得更好，而不是原地消耗。你欣赏比你强、能带你看世界的人，也拒绝摆烂的人生。';
+      ratio='7%';
+      fit=['自律、有目标感，不是嘴上说说','能力或见识在你之上，且愿意教你','欣赏你的野心，不要求你“安稳就行”','能带你认识新圈子、新事物','也能在你累的时候慢下来'];
+      warn=['自己不上进还劝你别拼的人','靠打压你获得优越感的人','只有履历好看、对人不好的人'];
+      local='西昌本地创业圈、体制骨干、专业技术岗的异性和你同频，能一起成长，彼此成就。';
+    }
+    else {
+      if(autonomy > 55){
+        subtype='安稳并行型'; nickname='踏实系 · 独立款';
+        catBreed='狸花猫'; catLine='野性又独立，有自己的主见和边界，不黏人不矫情，认定了才会卸下防备，专一又长情。';
+        catImg='https://aka.doubaocdn.com/s/8v18j69nAy';
+        empathy='你不追求轰轰烈烈，<strong>安稳、踏实、各有空间</strong>就很好。两个人各自有自己的生活，也有共同的方向，不黏不腻，细水长流。';
+        ratio='18%';
+        fit=['情绪稳定、说到做到的人','有自己的爱好和事业，不黏人','尊重边界，不查岗不控制','生活作息规律，三观正','对未来有规划，不逃避'];
+        warn=['情绪化、反复无常的人','控制欲强、没边界的人','对未来没规划的人'];
+        local='西昌本地体制内、国企、技术岗异性最适配，作息规律、性格稳定，能和你把日子过扎实。';
+      } else {
+        subtype='安稳共建型'; nickname='踏实系 · 居家款';
+        catBreed='橘猫'; catLine='佛系好养活、性格软萌，是居家必备的暖猫，陪你把日子过得安稳又踏实。';
+        catImg='https://aka.doubaocdn.com/s/VaXPib2fwg';
+        empathy='你要的不多，就是<strong>一个安稳的家</strong>。靠谱、踏实、说到做到，比什么浪漫心动都重要。你想找的是队友，是能一起把日子过好的人。';
+        ratio='20%';
+        fit=['情绪稳定、说到做到的人','有明确生活规划，不逃避谈未来','消费观务实，不靠承诺代替行动','尊重你的节奏，不催也不吊着','家庭观念相近，对父母边界有共识'];
+        warn=['只会说好听话、行动跟不上的人','对未来永远“再看看”的人','花钱大手大脚没规划的人'];
+        local='在西昌，你最适配体制内、技术岗、国企类异性，大多性格稳、作息规律，能和你一起把日子过扎实。';
+      }
+    }
+    return { type: subtype, nickname: nickname, empathy: empathy, ratio: ratio,
+             catBreed: catBreed, catImg: catImg, catLine: catLine,
+             fit: fit, warn: warn, local: local };
+  }
+  function renderResult(d){
+    var bars=[
+      ['安全感指数',d.security],
+      ['冲突建设性',d.conflict],
+      ['承诺意愿',d.commit],
+      ['独立空间需求',d.autonomy]
+    ];
+    var isMale = d.gender === '男';
+    var ratioText = isMale
+      ? '在西昌单身男生里，和你同类型的大概占 <strong>'+d.ratio+'</strong>'
+      : '在西昌单身女生里，和你同类型的大概占 <strong>'+d.ratio+'</strong>';
+    var shareText = isMale
+      ? '快发给你的<strong>单身朋友</strong>，看看你们是不是同一种猫格～'
+      : '快发给你的<strong>单身朋友</strong>，看看你们是不是同一种猫格～';
+    function replaceGender(text){
+      if(!isMale) return text;
+      return text.replace(/男生/g,'女生').replace(/他/g,'她').replace(/兄弟/g,'闺蜜');
+    }
+    var fitList = d.fit.map(function(item){ return replaceGender(item); });
+    var warnList = d.warn.map(function(item){ return replaceGender(item); });
+    var localText = replaceGender(d.local);
+    var catLine = replaceGender(d.catLine);
+    var endTalk = isMale
+      ? '作为站长，我顺便跟你说说<strong>西昌女生心里的真实想法</strong>，再给你1句实在的择偶建议，不推销。'
+      : '作为站长，我顺便跟你说说<strong>西昌男生心里的真实想法</strong>，再给你1句实在的择偶建议，不推销。';
+    var html='<div class="result-hero">';
+    html+='<div class="result-nickname">'+d.nickname+'</div>';
+    html+='<div class="result-type">'+d.type+'</div>';
+    html+='<div class="cat-card">';
+    html+='<div class="cat-imgwrap">';
+    html+='<span class="cat-badge">🐾 你的猫格</span>';
+    html+='<img src="'+d.catImg+'" alt="'+d.catBreed+'" onerror="this.style.display=\'none\';this.parentNode.querySelector(\'.cat-fallback\').style.display=\'flex\';">';
+    html+='<div class="cat-fallback">🐱</div>';
+    html+='</div>';
+    html+='<div class="cat-info">';
+    html+='<div class="cat-breed"><span class="paw">🐾</span>'+d.catBreed+'</div>';
+    html+='<div class="cat-line">'+catLine+'</div>';
+    html+='</div></div>';
+    html+='<div class="result-empathy">'+d.empathy+'</div>';
+    html+='<div class="result-ratio">'+ratioText+'</div>';
+    html+='</div>';
+    html+='<div class="section"><div class="section-title"><span class="dot"></span>你的四个维度</div>';
+    for(var i=0;i<bars.length;i++){
+      html+='<div class="bar-row"><span style="width:90px;flex-shrink:0">'+bars[i][0]+'</span><div class="bar-track"><div class="bar-fill" style="width:'+bars[i][1]+'%"></div></div><span style="width:36px;text-align:right;color:var(--sub)">'+bars[i][1]+'</span></div>';
+    }
+    html+='</div>';
+    html+='<div class="section"><div class="section-title"><span class="dot"></span>核心情绪需求</div><div class="tags">';
+    for(var j=0;j<d.top2.length;j++){
+      html+='<span class="tag'+(j===0?' hot':'')+'">'+(j===0?'★ 核心需求：':'')+d.top2[j]+'</span>';
+    }
+    html+='</div><p style="font-size:14px;color:#555;margin-top:12px">你在关系里最怕的是：<strong>'+d.fear+'</strong></p></div>';
+    if(d.inconsistent){
+      html+='<div class="section"><div class="section-title"><span class="dot" style="background:var(--warn)"></span>一个值得注意的地方</div><p style="font-size:14px;color:#555;line-height:1.7">你“最想得到的”和“最愿意给的”并不在同一件事上。这很常见，但它往往是关系里最容易错位的地方——你给的不是对方要的，对方给的也不是你想要的。</p></div>';
+    }
+    html+='<div class="section"><div class="section-title"><span class="dot"></span>适配你的人 · 5个特征</div><ul class="list">';
+    for(var p=0;p<fitList.length;p++) html+='<li>'+fitList[p]+'</li>';
+    html+='</ul></div>';
+    html+='<div class="section"><div class="section-title"><span class="dot" style="background:var(--warn)"></span>两类建议你警惕的人</div><ul class="list warn">';
+    for(var w=0;w<warnList.length;w++) html+='<li>'+warnList[w]+'</li>';
+    html+='</ul></div>';
+    html+='<div class="local-tip"><p><strong>📍 西昌本地适配参考</strong><br>'+localText+'</p></div>';
+    html+='<div class="section"><div class="section-title"><span class="dot"></span>你的现实匹配清单</div><div class="tags">';
+    if(d.tags&&d.tags.length>0){
+      for(var q=0;q<d.tags.length;q++) html+='<span class="tag">'+d.tags[q]+'</span>';
+      html+='</div><p class="note" style="margin-top:10px;font-size:13px;color:#888">这几条是硬门槛，比“性格合不合”更能预测能不能走下去。</p>';
+    } else {
+      html+='</div><p class="note" style="margin-top:10px;font-size:13px;color:#888">这一部分你没答完，清单没法生成。重测时把第六部分的 5 道题补上，它会直接变成筛人条件。</p>';
+    }
+    html+='</div>';
+    html+='<div class="share-tip">'+shareText+'</div>';
+    html+='<div class="tip-box"><p>觉得准的话，可以<strong>截图结果</strong>发我微信/抖音。<br><br>'+endTalk+'</p></div>';
+    // ==========【新增：微信二维码卡片】==========
+    html += `<div style="margin-top:24px;padding:20px;background:var(--pri-light);border-radius:14px;text-align:center;">
+  <p style="color:var(--pri);font-weight:bold;margin:0 0 12px 0;font-size:16px;">西昌阿峰单身情报站｜加站长微信</p>
+  <img src="qr-card.png" alt="扫码添加阿峰微信" style="width:100%;max-width:280px;border-radius:12px;">
+  <p style="color:var(--sub);margin:12px 0 0 0;font-size:14px;">扫码领取匹配建议｜西昌本地轻社交脱单</p>
+</div>`;
+    document.getElementById('resultBody').innerHTML=html;
+    window._resultText='【'+d.nickname+' · '+d.type+' · 猫格'+d.catBreed+'】'+name+'｜核心需求：'+d.top2.join('、')+'｜最怕：'+d.fear+'｜适配：'+fitList.slice(0,3).join('、');
+  }
+  function copyResult(){
+    var t=window._resultText||'';
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(t+'\n——单身恋爱人格测试').then(function(){
+        alert('已复制，可粘贴到对话框发给我');
+      }).catch(function(){fallbackCopy(t);});
+    } else {
+      fallbackCopy(t);
+    }
+  }
+  function fallbackCopy(t){
+    var ta=document.createElement('textarea');
+    ta.value=t+'\n——单身恋爱人格测试';
+    ta.style.position='fixed';ta.style.left='-9999px';
+    document.body.appendChild(ta);ta.select();
+    try{
+      document.execCommand('copy');
+      alert('已复制，可粘贴到对话框发给我');
+    }catch(e){
+      prompt('请手动复制：',ta.value);
+    }
+    document.body.removeChild(ta);
+  }
+</script>
+</body>
+</html>
