@@ -324,7 +324,7 @@
     </div>
     <div class="brand-footer">
       <p>测试出品：<strong>西昌阿峰单身情报站</strong></p>
-      <p style="font-size:12px;margin-top:4px;color:#999">抖音/微信同名 · 西昌本地轻社交脱单局</p>
+      <p style="font-size:12px;margin-top:4px;color:#999">抖音/微信同名 · 西昌阿峰单身情报站</p>
     </div>
   </section>
   <p class="disclaimer">本测试为自我探索参考，不构成心理评估或诊断。数据仅用于为你提供更匹配的推荐，未经同意不会向任何人透露。</p>
@@ -680,8 +680,8 @@
     var localText = replaceGender(d.local);
     var catLine = replaceGender(d.catLine);
     var endTalk = isMale
-      ? '作为站长，我顺便跟你说说<strong>西昌女生心里的真实想法</strong>，再给你1句实在的择偶建议，不推销。'
-      : '作为站长，我顺便跟你说说<strong>西昌男生心里的真实想法</strong>，再给你1句实在的择偶建议，不推销。';
+      ? '作为站长，我顺便跟你说说<strong>西昌女生心里的真实想法</strong>，再给你几句实在的择偶建议，不推销。'
+      : '作为站长，我顺便跟你说说<strong>西昌男生心里的真实想法</strong>，再给你几句实在的择偶建议，不推销。';
     var html='<div class="result-hero">';
     html+='<div class="result-nickname">'+d.nickname+'</div>';
     html+='<div class="result-type">'+d.type+'</div>';
@@ -728,12 +728,14 @@
     html+='</div>';
     html+='<div class="share-tip">'+shareText+'</div>';
     html+='<div class="tip-box"><p>觉得准的话，可以<strong>截图结果</strong>发我微信/抖音。<br><br>'+endTalk+'</p></div>';
-    // ==========【新增：微信二维码卡片】==========
+
+    // 【替换为微信号文字模块，不再使用qr‑card.png图片】
     html += `<div style="margin-top:24px;padding:20px;background:var(--pri-light);border-radius:14px;text-align:center;">
-  <p style="color:var(--pri);font-weight:bold;margin:0 0 12px 0;font-size:16px;">西昌阿峰单身情报站｜加站长微信</p>
-  <img src="qr-card.png" alt="扫码添加阿峰微信" style="width:100%;max-width:280px;border-radius:12px;">
-  <p style="color:var(--sub);margin:12px 0 0 0;font-size:14px;">扫码领取匹配建议｜西昌本地轻社交脱单</p>
+  <p style="color:var(--pri);font-weight:bold;margin:0 0 8px 0;font-size:16px;">西昌阿峰单身情报站｜添加站长微信</p>
+  <p style="font-size:15px;margin:0 0 6px 0;">微信号：<strong>xcafdsqbz01</strong></p>
+  <p style="color:var(--sub);margin:0;font-size:14px;">添加备注：恋爱测试，领取匹配建议｜本地轻社交脱单</p>
 </div>`;
+
     document.getElementById('resultBody').innerHTML=html;
     window._resultText='【'+d.nickname+' · '+d.type+' · 猫格'+d.catBreed+'】'+name+'｜核心需求：'+d.top2.join('、')+'｜最怕：'+d.fear+'｜适配：'+fitList.slice(0,3).join('、');
   }
